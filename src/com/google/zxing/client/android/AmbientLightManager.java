@@ -17,7 +17,6 @@
 package com.google.zxing.client.android;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -47,8 +46,7 @@ final class AmbientLightManager implements SensorEventListener {
 
   void start(CameraManager cameraManager) {
     this.cameraManager = cameraManager;
-    SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-    if (FrontLightMode.readPref(sharedPrefs) == FrontLightMode.AUTO) {
+    if (true) {
       SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
       lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
       if (lightSensor != null) {

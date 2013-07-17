@@ -17,7 +17,6 @@
 package com.google.zxing.client.android.camera;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.preference.PreferenceManager;
@@ -92,13 +91,11 @@ final class CameraConfigurationManager {
       Log.w(TAG, "In camera config safe mode -- most settings will not be honored");
     }
 
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-    initializeTorch(parameters, prefs, safeMode);
+    initializeTorch(parameters, safeMode);
 
     String focusMode = null;
-    if (prefs.getBoolean(PreferencesActivity.KEY_AUTO_FOCUS, true)) {
-      if (safeMode || prefs.getBoolean(PreferencesActivity.KEY_DISABLE_CONTINUOUS_FOCUS, false)) {
+    if (true) {
+      if (safeMode) {
         focusMode = findSettableValue(parameters.getSupportedFocusModes(),
                                       Camera.Parameters.FOCUS_MODE_AUTO);
       } else {
@@ -118,7 +115,7 @@ final class CameraConfigurationManager {
       parameters.setFocusMode(focusMode);
     }
 
-    if (prefs.getBoolean(PreferencesActivity.KEY_INVERT_SCAN, false)) {
+    if (false) {
       String colorMode = findSettableValue(parameters.getSupportedColorEffects(),
                                            Camera.Parameters.EFFECT_NEGATIVE);
       if (colorMode != null) {
@@ -157,8 +154,8 @@ final class CameraConfigurationManager {
     camera.setParameters(parameters);
   }
 
-  private void initializeTorch(Camera.Parameters parameters, SharedPreferences prefs, boolean safeMode) {
-    boolean currentSetting = FrontLightMode.readPref(prefs) == FrontLightMode.ON;
+  private void initializeTorch(Camera.Parameters parameters, boolean safeMode) {
+    boolean currentSetting = false;
     doSetTorch(parameters, currentSetting, safeMode);
   }
 

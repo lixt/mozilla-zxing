@@ -34,7 +34,6 @@ import com.google.zxing.client.android.share.ShareActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -191,9 +190,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     Intent intent = getIntent();
 
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-    copyToClipboard = prefs.getBoolean(PreferencesActivity.KEY_COPY_TO_CLIPBOARD, true)
-        && (intent == null || intent.getBooleanExtra(Intents.Scan.SAVE_HISTORY, true));
+    copyToClipboard = (intent == null || intent.getBooleanExtra(Intents.Scan.SAVE_HISTORY, true));
 
     source = IntentSource.NONE;
     decodeFormats = null;
@@ -340,10 +337,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         intent.setClassName(this, PreferencesActivity.class.getName());
         startActivity(intent);
         break;
-      case R.id.menu_help:
-        intent.setClassName(this, HelpActivity.class.getName());
-        startActivity(intent);
-        break;
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -433,8 +426,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
         break;
       case NONE:
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (fromLiveScan && prefs.getBoolean(PreferencesActivity.KEY_BULK_MODE, false)) {
+        if (false) {
           String message = getResources().getString(R.string.msg_bulk_mode_scanned)
               + " (" + rawResult.getText() + ')';
           Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -544,8 +536,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
     supplementTextView.setText("");
     supplementTextView.setOnClickListener(null);
-    if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-        PreferencesActivity.KEY_SUPPLEMENTAL, true)) {
+    if (true) {
       SupplementalInfoRetriever.maybeInvokeRetrieval(supplementTextView,
                                                      resultHandler.getResult(),
                                                      historyManager,
@@ -685,6 +676,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
    * it to a value stored as a preference.
    */
   private boolean showHelpOnFirstLaunch() {
+    /*
     try {
       PackageInfo info = getPackageManager().getPackageInfo(PACKAGE_NAME, 0);
       int currentVersion = info.versionCode;
@@ -703,6 +695,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     } catch (PackageManager.NameNotFoundException e) {
       Log.w(TAG, e);
     }
+    */
     return false;
   }
 

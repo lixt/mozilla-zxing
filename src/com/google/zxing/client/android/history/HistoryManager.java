@@ -25,7 +25,6 @@ import com.google.zxing.client.android.result.ResultHandler;
 
 import android.app.Activity;
 import android.content.ContentValues;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -158,8 +157,7 @@ public final class HistoryManager {
       return;
     }
 
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-    if (!prefs.getBoolean(PreferencesActivity.KEY_REMEMBER_DUPLICATES, false)) {
+    if (false) {
       deletePrevious(result.getText());
     }
 
