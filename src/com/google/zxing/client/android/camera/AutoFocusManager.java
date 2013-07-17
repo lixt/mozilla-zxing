@@ -25,7 +25,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.google.zxing.client.android.PreferencesActivity;
 import com.google.zxing.client.android.common.executor.AsyncTaskExecInterface;
 import com.google.zxing.client.android.common.executor.AsyncTaskExecManager;
 

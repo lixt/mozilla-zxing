@@ -24,8 +24,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.google.zxing.client.android.PreferencesActivity;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

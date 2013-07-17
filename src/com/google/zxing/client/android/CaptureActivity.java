@@ -145,8 +145,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     beepManager = new BeepManager(this);
     ambientLightManager = new AmbientLightManager(this);
 
-    PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
     showHelpOnFirstLaunch();
   }
 
@@ -332,10 +330,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       case R.id.menu_history:
         intent.setClassName(this, HistoryActivity.class.getName());
         startActivityForResult(intent, HISTORY_REQUEST_CODE);
-        break;
-      case R.id.menu_settings:
-        intent.setClassName(this, PreferencesActivity.class.getName());
-        startActivity(intent);
         break;
       default:
         return super.onOptionsItemSelected(item);

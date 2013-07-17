@@ -23,8 +23,4 @@
         android:title="@string/menu_history"
         android:icon="@android:drawable/ic_menu_recent_history"
         android:orderInCategory="2"/>
-  <item android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:orderInCategory="3"/>
 </menu>

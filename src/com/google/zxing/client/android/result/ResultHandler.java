@@ -20,7 +20,6 @@ import com.google.zxing.Result;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.LocaleManager;
-import com.google.zxing.client.android.PreferencesActivity;
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.android.book.SearchBookContentsActivity;
 import com.google.zxing.client.result.ParsedResult;
@@ -33,7 +32,6 @@ import android.app.SearchManager;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -516,13 +514,7 @@ public abstract class ResultHandler {
   }
 
   private String parseCustomSearchURL() {
-    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-    String customProductSearch = prefs.getString(PreferencesActivity.KEY_CUSTOM_PRODUCT_SEARCH,
-        null);
-    if (customProductSearch != null && customProductSearch.trim().length() == 0) {
-      return null;
-    }
-    return customProductSearch;
+    return null;
   }
 
   final String fillInCustomSearchURL(String text) {
