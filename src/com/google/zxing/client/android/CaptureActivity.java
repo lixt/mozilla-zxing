@@ -25,7 +25,6 @@ import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
-import com.google.zxing.client.android.share.ShareActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -303,7 +302,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
     return super.onKeyDown(keyCode, event);
   }
-
+  /*
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater menuInflater = getMenuInflater();
@@ -316,15 +315,11 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     Intent intent = new Intent(Intent.ACTION_VIEW);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
     switch (item.getItemId()) {
-      case R.id.menu_share:
-        intent.setClassName(this, ShareActivity.class.getName());
-        startActivity(intent);
-        break;
       default:
         return super.onOptionsItemSelected(item);
     }
     return true;
-  }
+  }*/
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {

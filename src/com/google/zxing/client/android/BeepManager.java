@@ -83,7 +83,7 @@ final class BeepManager {
 
   private static MediaPlayer buildMediaPlayer(Context activity) {
     MediaPlayer mediaPlayer = new MediaPlayer();
-    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    /*mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     // When the beep has finished playing, rewind to queue up another one.
     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
       @Override
@@ -101,7 +101,7 @@ final class BeepManager {
     } catch (IOException ioe) {
       Log.w(TAG, ioe);
       mediaPlayer = null;
-    }
+    }*/
     return mediaPlayer;
   }
 
