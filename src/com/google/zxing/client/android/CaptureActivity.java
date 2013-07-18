@@ -22,13 +22,9 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.camera.CameraManager;
-import com.google.zxing.client.android.history.HistoryActivity;
-import com.google.zxing.client.android.history.HistoryItem;
-import com.google.zxing.client.android.history.HistoryManager;
 import com.google.zxing.client.android.result.ResultButtonListener;
 import com.google.zxing.client.android.result.ResultHandler;
 import com.google.zxing.client.android.result.ResultHandlerFactory;
-import com.google.zxing.client.android.result.supplement.SupplementalInfoRetriever;
 import com.google.zxing.client.android.share.ShareActivity;
 
 import android.app.Activity;
@@ -113,7 +109,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private Collection<BarcodeFormat> decodeFormats;
   private Map<DecodeHintType,?> decodeHints;
   private String characterSet;
-  private HistoryManager historyManager;
   private InactivityTimer inactivityTimer;
   private BeepManager beepManager;
   private AmbientLightManager ambientLightManager;
@@ -139,8 +134,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     setContentView(R.layout.capture);
 
     hasSurface = false;
-    historyManager = new HistoryManager(this);
-    historyManager.trimHistory();
     inactivityTimer = new InactivityTimer(this);
     beepManager = new BeepManager(this);
     ambientLightManager = new AmbientLightManager(this);
@@ -327,10 +320,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         intent.setClassName(this, ShareActivity.class.getName());
         startActivity(intent);
         break;
-      case R.id.menu_history:
-        intent.setClassName(this, HistoryActivity.class.getName());
-        startActivityForResult(intent, HISTORY_REQUEST_CODE);
-        break;
       default:
         return super.onOptionsItemSelected(item);
     }
@@ -340,13 +329,13 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     if (resultCode == RESULT_OK) {
-      if (requestCode == HISTORY_REQUEST_CODE) {
+      /*if (requestCode == HISTORY_REQUEST_CODE) {
         int itemNumber = intent.getIntExtra(Intents.History.ITEM_NUMBER, -1);
         if (itemNumber >= 0) {
           HistoryItem historyItem = historyManager.buildHistoryItem(itemNumber);
           decodeOrStoreSavedBitmap(null, historyItem.getResult());
         }
-      }
+      }*/
     }
   }
 
@@ -401,7 +390,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     boolean fromLiveScan = barcode != null;
     if (fromLiveScan) {
-      historyManager.addHistoryItem(rawResult, resultHandler);
       // Then not from history, so beep/vibrate and we have an image to draw on
       beepManager.playBeepSoundAndVibrate();
       drawResultPoints(barcode, scaleFactor, rawResult);
@@ -524,7 +512,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     CharSequence displayContents = resultHandler.getDisplayContents();
     contentsTextView.setText(displayContents);
     // Crudely scale betweeen 22 and 32 -- bigger font for shorter text
-    int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
+    /*int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
     contentsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
 
     TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
@@ -533,9 +521,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     if (true) {
       SupplementalInfoRetriever.maybeInvokeRetrieval(supplementTextView,
                                                      resultHandler.getResult(),
-                                                     historyManager,
                                                      this);
-    }
+    }*/
 
     int buttonCount = resultHandler.getButtonCount();
     ViewGroup buttonView = (ViewGroup) findViewById(R.id.result_button_view);
