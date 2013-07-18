@@ -38,13 +38,13 @@ public final class ISBNResultHandler extends ResultHandler {
 
   public ISBNResultHandler(Activity activity, ParsedResult result, Result rawResult) {
     super(activity, result, rawResult);
-    showGoogleShopperButton(new View.OnClickListener() {
+    /*showGoogleShopperButton(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         ISBNParsedResult isbnResult = (ISBNParsedResult) getResult();
         openGoogleShopper(isbnResult.getISBN());
       }
-    });
+    });*/
   }
 
   @Override

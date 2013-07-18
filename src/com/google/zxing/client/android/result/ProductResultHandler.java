@@ -39,13 +39,13 @@ public final class ProductResultHandler extends ResultHandler {
 
   public ProductResultHandler(Activity activity, ParsedResult result, Result rawResult) {
     super(activity, result, rawResult);
-    showGoogleShopperButton(new View.OnClickListener() {
+    /*showGoogleShopperButton(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         ProductParsedResult productResult = (ProductParsedResult) getResult();
         openGoogleShopper(productResult.getNormalizedProductID());
       }
-    });
+    });*/
   }
 
   @Override

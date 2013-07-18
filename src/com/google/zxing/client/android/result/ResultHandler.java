@@ -115,8 +115,8 @@ public abstract class ResultHandler {
 
     // Make sure the Shopper button is hidden by default. Without this, scanning a product followed
     // by a QR Code would leave the button on screen among the QR Code actions.
-    View shopperButton = activity.findViewById(R.id.shopper_button);
-    shopperButton.setVisibility(View.GONE);
+    //View shopperButton = activity.findViewById(R.id.shopper_button);
+    //shopperButton.setVisibility(View.GONE);
   }
 
   public final ParsedResult getResult() {
@@ -170,9 +170,9 @@ public abstract class ResultHandler {
    * @param listener The on click listener to install for this button.
    */
   final void showGoogleShopperButton(View.OnClickListener listener) {
-    View shopperButton = activity.findViewById(R.id.shopper_button);
+    /*View shopperButton = activity.findViewById(R.id.shopper_button);
     shopperButton.setVisibility(View.VISIBLE);
-    shopperButton.setOnClickListener(listener);
+    shopperButton.setOnClickListener(listener);*/
   }
 
   /**
@@ -470,7 +470,7 @@ public abstract class ResultHandler {
       AlertDialog.Builder builder = new AlertDialog.Builder(activity);
       builder.setTitle(R.string.msg_google_shopper_missing);
       builder.setMessage(R.string.msg_install_google_shopper);
-      builder.setIcon(R.drawable.shopper_icon);
+      //builder.setIcon(R.drawable.shopper_icon);
       builder.setPositiveButton(R.string.button_ok, shopperMarketListener);
       builder.setNegativeButton(R.string.button_cancel, null);
       builder.show();
