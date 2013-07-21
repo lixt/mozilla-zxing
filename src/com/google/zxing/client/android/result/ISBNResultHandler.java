@@ -22,7 +22,6 @@ import com.google.zxing.client.result.ISBNParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 
 import android.app.Activity;
-import android.view.View;
 
 /**
  * Handles books encoded by their ISBN values.
@@ -31,20 +30,11 @@ import android.view.View;
  */
 public final class ISBNResultHandler extends ResultHandler {
   private static final int[] buttons = {
-      R.string.button_product_search,
-      R.string.button_book_search,
-      R.string.button_custom_product_search
+      R.string.button_web_search,
   };
 
   public ISBNResultHandler(Activity activity, ParsedResult result, Result rawResult) {
     super(activity, result, rawResult);
-    /*showGoogleShopperButton(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        ISBNParsedResult isbnResult = (ISBNParsedResult) getResult();
-        openGoogleShopper(isbnResult.getISBN());
-      }
-    });*/
   }
 
   @Override
@@ -60,17 +50,7 @@ public final class ISBNResultHandler extends ResultHandler {
   @Override
   public void handleButtonPress(int index) {
     ISBNParsedResult isbnResult = (ISBNParsedResult) getResult();
-    switch (index) {
-      case 0:
-        openProductSearch(isbnResult.getISBN());
-        break;
-      case 1:
-        openBookSearch(isbnResult.getISBN());
-        break;
-      case 2:
-        openURL(fillInCustomSearchURL(isbnResult.getISBN()));
-        break;
-    }
+    openProductSearch(isbnResult.getISBN());
   }
 
   @Override

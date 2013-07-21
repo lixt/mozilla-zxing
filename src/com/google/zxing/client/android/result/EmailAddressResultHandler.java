@@ -30,7 +30,6 @@ import android.app.Activity;
 public final class EmailAddressResultHandler extends ResultHandler {
   private static final int[] buttons = {
       R.string.button_email,
-      R.string.button_add_contact
   };
 
   public EmailAddressResultHandler(Activity activity, ParsedResult result) {
@@ -50,19 +49,10 @@ public final class EmailAddressResultHandler extends ResultHandler {
   @Override
   public void handleButtonPress(int index) {
     EmailAddressParsedResult emailResult = (EmailAddressParsedResult) getResult();
-    switch (index) {
-      case 0:
-        sendEmailFromUri(emailResult.getMailtoURI(),
-                         emailResult.getEmailAddress(),
-                         emailResult.getSubject(),
-                         emailResult.getBody());
-        break;
-      case 1:
-        String[] addresses = new String[1];
-        addresses[0] = emailResult.getEmailAddress();
-        addEmailOnlyContact(addresses, null);
-        break;
-    }
+    sendEmailFromUri(emailResult.getMailtoURI(),
+                     emailResult.getEmailAddress(),
+                     emailResult.getSubject(),
+                     emailResult.getBody());
   }
 
   @Override

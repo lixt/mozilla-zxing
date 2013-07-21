@@ -30,7 +30,6 @@ import android.app.Activity;
 public final class GeoResultHandler extends ResultHandler {
   private static final int[] buttons = {
       R.string.button_show_map,
-      R.string.button_get_directions
   };
 
   public GeoResultHandler(Activity activity, ParsedResult result) {
@@ -50,14 +49,8 @@ public final class GeoResultHandler extends ResultHandler {
   @Override
   public void handleButtonPress(int index) {
     GeoParsedResult geoResult = (GeoParsedResult) getResult();
-    switch (index) {
-      case 0:
-        openMap(geoResult.getGeoURI());
-        break;
-      case 1:
-        getDirections(geoResult.getLatitude(), geoResult.getLongitude());
-        break;
-    }
+    openMap(geoResult.getGeoURI());
+
   }
 
   @Override

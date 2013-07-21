@@ -16,7 +16,6 @@
 
 package com.google.zxing.client.android.result;
 
-import com.google.zxing.client.android.LocaleManager;
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
@@ -39,8 +38,6 @@ public final class URIResultHandler extends ResultHandler {
 
   private static final int[] buttons = {
       R.string.button_open_browser,
-      R.string.button_share_by_email,
-      R.string.button_share_by_sms,
   };
 
   public URIResultHandler(Activity activity, ParsedResult result) {
@@ -49,10 +46,7 @@ public final class URIResultHandler extends ResultHandler {
 
   @Override
   public int getButtonCount() {
-    if (LocaleManager.isBookSearchUrl(((URIParsedResult) getResult()).getURI())) {
-      return buttons.length;
-    }
-    return buttons.length - 1;
+    return buttons.length;
   }
 
   @Override
@@ -64,17 +58,7 @@ public final class URIResultHandler extends ResultHandler {
   public void handleButtonPress(int index) {
     URIParsedResult uriResult = (URIParsedResult) getResult();
     String uri = uriResult.getURI();
-    switch (index) {
-      case 0:
-        openURL(uri);
-        break;
-      case 1:
-        shareByEmail(uri);
-        break;
-      case 2:
-        shareBySMS(uri);
-        break;
-    }
+    openURL(uri);
   }
 
   @Override

@@ -18,7 +18,6 @@ package com.google.zxing.client.android.result;
 
 import com.google.zxing.Result;
 import com.google.zxing.client.android.Contents;
-import com.google.zxing.client.android.Intents;
 import com.google.zxing.client.android.LocaleManager;
 import com.google.zxing.client.android.R;
 import com.google.zxing.client.result.ParsedResult;
@@ -33,7 +32,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
@@ -87,7 +85,7 @@ public abstract class ResultHandler {
   };
   private static final int NO_TYPE = -1;
 
-  public static final int MAX_BUTTON_COUNT = 4;
+  public static final int MAX_BUTTON_COUNT = 1;
 
   private final ParsedResult result;
   private final Activity activity;
