@@ -65,11 +65,7 @@ public final class StringUtils {
     boolean canBeShiftJIS = true;
     boolean canBeUTF8 = true;
     boolean canBeGBK = true;
-    int gbkLeft_1 = 0;
-    int gbkLeft_2 = 0;
-    int gbkLeft_3 = 0;
-    int gbkLeft_4 = 0;
-    int gbkLeft_5 = 0;
+    int gbkLeft = 0;
     
     int utf8BytesLeft = 0;
     //int utf8LowChars = 0;
@@ -103,54 +99,17 @@ public final class StringUtils {
       
       // GBK stuff
       if (canBeGBK) {
-    	  if(gbkLeft_1 == 0 && gbkLeft_2 == 0 && gbkLeft_3 == 0 && gbkLeft_4 ==0 && gbkLeft_5 == 0) {
-    		  if(value >= 0x81 && value <= 0xA0) {
-    			  gbkLeft_3 = 1;
-    		  }
-    		  else if(value >= 0xA1 && value <= 0xA9) {
-    			  gbkLeft_1 = 1;
-    			  if(value >= 0xA8 && value <= 0xA9) {
-    				  gbkLeft_5 = 1;
-    			  }
-    		  }
-    		  else if(value >= 0xAA && value <= 0xFE) {
-    			  gbkLeft_4 = 1;
-    			  if(value >= 0xB0 && value <= 0xF7) {
-    				  gbkLeft_2 = 1;
-    			  }
+    	  if(gbkLeft == 0) {
+    		  if(value >= 0xB0 && value <= 0xF7) {
+    			  gbkLeft = 1;
     		  }
     	  }
     	  else {
-	    	  if(gbkLeft_1 > 0 && gbkLeft_5 > 0) {
-	    		  if(!(value >= 0x40 && value <= 0xA0 && value != 0x7F) &&
-	    				  !(value >= 0xA1 && value <= 0xFE)) {
-	    			  canBeGBK = false;
-	    		  }
-	    	  }
-	    	  
-	    	  if(gbkLeft_1 > 0 && gbkLeft_5 == 0) {
-	    		  if(!(value >= 0xA1 && value <= 0xFE)) {
-	    			  canBeGBK = false;
-	    		  }
-	    	  }
-	    	  
-	    	  if(gbkLeft_4 > 1 && gbkLeft_2 > 1) {
-	    		  if(!(value >= 0x40 && value <= 0xA0 && value != 0x7F) &&
-	    				  !(value >= 0xA1 && value <= 0xFE)) {
-	    			  canBeGBK = false;
-	    		  }
-	    	  }
-	    	  
-	    	  if(gbkLeft_4 > 1 && gbkLeft_2 == 0) {
-	    		  if(!(value >= 0xA1 && value <= 0xFE)) {
-	    			  canBeGBK = false;
-	    		  }
-	    	  }
-	    	  
-	    	  if(gbkLeft_3 > 1) {
-	    		  if(!(value >= 0x40 && value <= 0xA0 && value != 0x7F)) {
-	    			  canBeGBK = false;
-	    		  }
+	    	  if(!(value >= 0xA1 && value <= 0xFE)) {
+	    		  canBeGBK = false;
+              }
+	    	  else {
+	    		  gbkLeft = 0;
 	    	  }
     	  }
       }
