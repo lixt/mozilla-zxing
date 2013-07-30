@@ -18,6 +18,8 @@ package com.google.zxing.common;
 
 import java.util.Map;
 
+import android.util.Log;
+
 import com.google.zxing.DecodeHintType;
 
 /**
@@ -32,6 +34,7 @@ public final class StringUtils {
       System.getProperty("file.encoding");
   public static final String SHIFT_JIS = "SJIS";
   public static final String GB2312 = "GB2312";
+  public static final String GBK = "GBK";
   private static final String EUC_JP = "EUC_JP";
   private static final String UTF8 = "UTF8";
   private static final String ISO88591 = "ISO8859_1";
@@ -61,6 +64,13 @@ public final class StringUtils {
     boolean canBeISO88591 = true;
     boolean canBeShiftJIS = true;
     boolean canBeUTF8 = true;
+    boolean canBeGBK = true;
+    int gbkLeft_1 = 0;
+    int gbkLeft_2 = 0;
+    int gbkLeft_3 = 0;
+    int gbkLeft_4 = 0;
+    int gbkLeft_5 = 0;
+    
     int utf8BytesLeft = 0;
     //int utf8LowChars = 0;
     int utf2BytesChars = 0;
@@ -84,10 +94,66 @@ public final class StringUtils {
         bytes[2] == (byte) 0xBF;
 
     for (int i = 0;
-         i < length && (canBeISO88591 || canBeShiftJIS || canBeUTF8);
+         i < length && (canBeISO88591 || canBeShiftJIS || canBeUTF8 || canBeGBK);
          i++) {
 
       int value = bytes[i] & 0xFF;
+      
+      Log.i("LIXT", "" + value);
+      
+      // GBK stuff
+      if (canBeGBK) {
+    	  if(gbkLeft_1 == 0 && gbkLeft_2 == 0 && gbkLeft_3 == 0 && gbkLeft_4 ==0 && gbkLeft_5 == 0) {
+    		  if(value >= 0x81 && value <= 0xA0) {
+    			  gbkLeft_3 = 1;
+    		  }
+    		  else if(value >= 0xA1 && value <= 0xA9) {
+    			  gbkLeft_1 = 1;
+    			  if(value >= 0xA8 && value <= 0xA9) {
+    				  gbkLeft_5 = 1;
+    			  }
+    		  }
+    		  else if(value >= 0xAA && value <= 0xFE) {
+    			  gbkLeft_4 = 1;
+    			  if(value >= 0xB0 && value <= 0xF7) {
+    				  gbkLeft_2 = 1;
+    			  }
+    		  }
+    	  }
+    	  else {
+	    	  if(gbkLeft_1 > 0 && gbkLeft_5 > 0) {
+	    		  if(!(value >= 0x40 && value <= 0xA0 && value != 0x7F) &&
+	    				  !(value >= 0xA1 && value <= 0xFE)) {
+	    			  canBeGBK = false;
+	    		  }
+	    	  }
+	    	  
+	    	  if(gbkLeft_1 > 0 && gbkLeft_5 == 0) {
+	    		  if(!(value >= 0xA1 && value <= 0xFE)) {
+	    			  canBeGBK = false;
+	    		  }
+	    	  }
+	    	  
+	    	  if(gbkLeft_4 > 1 && gbkLeft_2 > 1) {
+	    		  if(!(value >= 0x40 && value <= 0xA0 && value != 0x7F) &&
+	    				  !(value >= 0xA1 && value <= 0xFE)) {
+	    			  canBeGBK = false;
+	    		  }
+	    	  }
+	    	  
+	    	  if(gbkLeft_4 > 1 && gbkLeft_2 == 0) {
+	    		  if(!(value >= 0xA1 && value <= 0xFE)) {
+	    			  canBeGBK = false;
+	    		  }
+	    	  }
+	    	  
+	    	  if(gbkLeft_3 > 1) {
+	    		  if(!(value >= 0x40 && value <= 0xA0 && value != 0x7F)) {
+	    			  canBeGBK = false;
+	    		  }
+	    	  }
+    	  }
+      }
 
       // UTF-8 stuff
       if (canBeUTF8) {
@@ -176,6 +242,11 @@ public final class StringUtils {
     }
     if (canBeShiftJIS && sjisBytesLeft > 0) {
       canBeShiftJIS = false;
+    }
+    
+    // GBK
+    if(canBeGBK) {
+    	return GBK;
     }
 
     // Easy -- if there is BOM or at least 1 valid not-single byte character (and no evidence it can't be UTF-8), done
